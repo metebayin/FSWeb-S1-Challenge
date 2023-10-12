@@ -149,16 +149,17 @@ Aşağıdakileri konsolda gösterim (console.log) işlemi gerçekleştirerek, yu
 (işlev yazmanıza gerek yok) */
 
 //(1) Dizideki ilk fenomen (0. dizin) profil (profile) adı
-
-
+//console.log (fenomenler [0].profile)
+console.log (fenomenler[0].profile)
 //(2) Dizideki üçüncü fenomenin (2. dizin) takipçi (followers) sayısı
-
-
+console.log(fenomenler[2].followers)
+//console.log(fenomenler[2].followers)
 /* Görev 2 (otomatik kontrol testi yapılmayacak):
 (işlev yazmanıza gerek yok)
-Fenomenler dizisinde bir yazım hatası var 😱 7. sıradaki fenomen 'Justin Bieber' ın soyismi 'Biber' olarak yanlış yazılmış. Bu sorunu düzeltin ve çalışmanızı kontrol etmek için console.log() yapın.
-
-
+Fenomenler dizisinde bir yazım hatası var 😱 7. sıradaki fenomen 'Justin Bieber' ın soyismi 'Biber' olarak yanlış yazılmış. Bu sorunu düzeltin ve çalışmanızı kontrol etmek için console.log() yapın.*/
+fenomenler[6].profile = "justin Bieber" 
+console.log ( fenomenler[6].profile) 
+/*atama yapıldı*/
 /*  Görev 3:
 Aşağıdaki işlemleri yapmak için indekseGoreFenomen işlevini kullanın:
 1. İlk parametre olarak fenomenler dizisini alın,
@@ -168,10 +169,9 @@ Aşağıdaki işlemleri yapmak için indekseGoreFenomen işlevini kullanın:
 NOT: DÖNDÜĞÜNÜZ DİZİN YUKARIDAKİ BİÇİMLE EŞLEŞMESİ GEREKİR, YA DA TESTİ GEÇMEYECEKTİR!
 ÖRNEK: fenomenler dizisi ve 3 sayısı ile indekseGoreFenomen çağrılırsa, `3. indekste bulunan fenomen: Leo Messi' */
 
-function indekseGoreFenomen(/*kod*/) {
-  /*kod*/
+function indekseGoreFenomen(dizi,i) {
+  return `${i}. indekste bulunan fenomen: ${dizi[i].profile}` 
 }
-
 
 
 /*  Görev 4:
@@ -182,9 +182,15 @@ Aşağıdakileri yapmak için profilListesi'ni kullanın:
 🌟 Dönüş ÖRNEĞİ: ["Instagram", "Cristiano Ronaldo", "Kylie"....]
 */
 
-function profilListesi(/*kod*/) {
-  /*kod*/
+function profilListesi(dizi) {
+  let yenidizi = [...dizi]
+  for ( let i = 0 ; i < yenidizi.length; i++ )
+{
+  yenidizi[i] = yenidizi[i].profile
 }
+  return yenidizi
+}
+console.log(profilListesi(fenomenler))
 
 
 
@@ -197,8 +203,10 @@ Aşağıdakileri yapmak için fenomenSil'i kullanın:
 5. Ortaya çıkan diziyi döndürün
 
 ÖRNEK: fenomenSil işlevi fenomenler dizisi ve 0 indeks sayısı ile çağrılırsa, veri kümemizden 'Instagram' kaldırılmış olarak döndürür. */
-function fenomenSil(/*kod*/) {
-  /*kod*/
+function fenomenSil(arr,i) {
+  let tempArr = [...arr];
+  tempArr.splice(i,1);
+  return tempArr
 }
 
 
@@ -220,9 +228,19 @@ Aşağıdakileri yapmak için fenomenEkle'i kullanın:
 
 ÖRNEK: fenomenEkle(fenomenler, 6, "Workintech", 10000000, 2022, "Instagram") çağrıldığında dizinin sonuna yukarıdaki nesne en sona eklenerek yeni fenomenler dizisini döndürmelidir. */
 
-function fenomenEkle(/*kod*/) {
-  /*kod*/
+function fenomenEkle(arr,n,pr,f,po,pl) {
+  let tempArr = [...arr]
+  let yeniFenomen = {
+    number : n,
+    profile : pr,
+    followers : f,
+    posts : po,
+    platform : pl
+  };
+  tempArr.push(yeniFenomen);
+  return tempArr;
 }
+console.log(fenomenEkle(fenomenler, 6, "Workintech", 10000000, 2022, "Instagram"));
 
 
 /* Görev 7:
@@ -233,10 +251,20 @@ Aşağıdakileri yapmak için enFenomenler'yi kullanın:
 ÖRNEK: enFenomenler(fenomenler) çağrıldığında sonuç olarak ["Instagram", "Cristiano Ronaldo", ... "Khabane lame"] dönemelidir
 */
 
-function enFenomenler(/*kod*/) {
-  /*kod*/
+function enFenomenler(dizi) {
+  let result = [];
+
+  for(let i = 0; i < dizi.length; i++){
+
+    if(dizi[i].followers > 100000000){
+
+    result.push(dizi[i].profile); 
+  }
+}
+return result;
 }
 
+console.log(enFenomenler(fenomenler));
 
 /* Görev 8:
 Aşağıdakileri yapmak için fenomenGonderimSayisi'nı kullanın:
@@ -247,11 +275,17 @@ Aşağıdakileri yapmak için fenomenGonderimSayisi'nı kullanın:
 ÖRNEK: fenomenGonderimSayisi(fenomenler, 'Will Smith') çağrıldığında "136" dönmelidir
 */
 
-function fenomenGonderimSayisi(/*kod*/){
-  /*kod*/
+function fenomenGonderimSayisi(dizi,profile){
+  let sonuc = 0;
+    for (let i = 0; i < dizi.length; i++  ) {
+              
+        sonuc = dizi[i].posts;
+      }
+    
+  return sonuc;
 }
 
-
+console.log("görev 8 posts", fenomenGonderimSayisi (fenomenler, "Will Smith"));
 
 /* Görev 9:
 Aşağıdakileri yapmak için platformaGoreCokGonderiYapanFenomen'ni kullanın:
@@ -264,8 +298,16 @@ Not: Gönderi sayısı belli olmayan (NA) hesaba katmayın.
 Örnek: platformaGoreCokGonderiYapanFenomen(fenomenler, 'TikTok') çağrıldığında "charli damelio" dönmelidir
 */
 
-function platformaGoreCokGonderiYapanFenomen(/*kod*/){
-  /*kod*/
+function platformaGoreCokGonderiYapanFenomen(dizi,platform){
+ let maxGönderi = 0
+ let maxGönderen = ""
+ for(let i=0;i<feno.length;i++){
+  if(dizi[i].platform==platform && dizi[i].posts>maxGönderi){
+    maxGönderi= dizi[i].posts
+    maxGönderen=dizi[i].profile
+  }
+ }
+ return maxGönderen
 }
 
 
